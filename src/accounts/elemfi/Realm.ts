@@ -1,7 +1,7 @@
 import { Keypair, PublicKey, VersionedTransaction } from "@solana/web3.js";
-import { Provider } from "@elemfi/common";
-import { ElemFiContext } from "../../programs";
-import { createRealmInstruction, CreateRealmInstructionParams } from "../../instructions";
+import { ElemFiProgram } from "../../programs";
+import { createRealmInstruction } from "../../instructions";
+import { ConnectedWallet } from "../../utils";
 
 export interface RealmData {
   authority: PublicKey;
@@ -10,12 +10,16 @@ export interface RealmData {
   escrowCollection: PublicKey | null;
 }
 
-export class Realm extends ElemFiContext {
+export class Realm {
   private _data?: RealmData;
 
   get data(): RealmData {
     if (!this._data) throw Error("Realm account not loaded");
     return this._data;
+  }
+
+  set data(data: RealmData) {
+    this._data = data;
   }
 
   get authority(): PublicKey {
@@ -34,23 +38,13 @@ export class Realm extends ElemFiContext {
     return this.data.escrowCollection;
   }
 
-  constructor(provider: Provider, readonly address: PublicKey, data?: RealmData) {
-    super(provider);
+  constructor(readonly program: ElemFiProgram, readonly address: PublicKey, data?: RealmData) {
     this._data = data;
   }
 
-  async reloadData() {
-    this._data = await this.program.account.realm.fetch(this.address);
-  }
-
-  static async load(provider: Provider, address: PublicKey): Promise<Realm> {
-    const realm = new Realm(provider, address);
-    await realm.reloadData();
-    return realm;
-  }
-
   static async create(
-    provider: Provider,
+    program: ElemFiProgram,
+    wallet: ConnectedWallet,
     params: {
       realmKP: Keypair;
       authorityKP?: Keypair;
@@ -59,15 +53,15 @@ export class Realm extends ElemFiContext {
       escrowCollection: PublicKey | null;
     }
   ): Promise<{ tx: VersionedTransaction; realm: Realm }> {
-    const realm = new Realm(provider, params.realmKP.publicKey);
-    const instructions = await createRealmInstruction(realm.program, {
+    const realm = new Realm(program, params.realmKP.publicKey);
+    const instructions = await createRealmInstruction(program, {
       realmKP: params.realmKP,
-      authority: params.authorityKP?.publicKey || realm.wallet.address,
+      authority: params.authorityKP?.publicKey || wallet.address,
       delegator: params.delegator,
       approver: params.approver,
       escrowCollection: params.escrowCollection,
     });
-    const tx = await realm.wallet.createLegacyTransaction(instructions);
+    const tx = await wallet.createLegacyTransaction(instructions);
     if (params.authorityKP) tx.sign([params.authorityKP]);
     tx.sign([params.realmKP]);
     return { tx, realm };
