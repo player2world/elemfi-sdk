@@ -1,0 +1,22 @@
+{
+  "name": "@elemfi/sdk",
+  "version": "0.1.3",
+  "main": "lib/src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.26.0",
+    "@elemfi/common": "^0.1.3",
+    "@metaplex-foundation/mpl-token-metadata": "^2.8.3",
+    "@solana/spl-token": "^0.3.7",
+    "@solana/web3.js": "^1.73.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+  }
+}

@@ -1,0 +1,5 @@
+
+.DS_Store
+.npmrc
+lib
+node_modules
