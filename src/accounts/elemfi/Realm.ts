@@ -48,18 +48,20 @@ export class Realm {
     params: {
       realmKP?: Keypair;
       authorityKP?: Keypair;
-      delegator: PublicKey;
-      approver: PublicKey;
+      delegator?: PublicKey;
+      approver?: PublicKey;
       escrowCollection: PublicKey | null;
     }
   ): Promise<{ tx: VersionedTransaction; realm: Realm }> {
     const realmKP = params.realmKP || Keypair.generate();
+    const authority = params.authorityKP?.publicKey || wallet.address;
+
     const realm = new Realm(program, realmKP.publicKey);
     const instructions = await createRealmInstruction(program, {
       realmKP,
-      authority: params.authorityKP?.publicKey || wallet.address,
-      delegator: params.delegator,
-      approver: params.approver,
+      authority,
+      delegator: params.delegator || authority,
+      approver: params.approver || authority,
       escrowCollection: params.escrowCollection,
     });
     const tx = await wallet.createLegacyTransaction(instructions);
