@@ -46,16 +46,17 @@ export class Realm {
     program: ElemFiProgram,
     wallet: ConnectedWallet,
     params: {
-      realmKP: Keypair;
+      realmKP?: Keypair;
       authorityKP?: Keypair;
       delegator: PublicKey;
       approver: PublicKey;
       escrowCollection: PublicKey | null;
     }
   ): Promise<{ tx: VersionedTransaction; realm: Realm }> {
-    const realm = new Realm(program, params.realmKP.publicKey);
+    const realmKP = params.realmKP || Keypair.generate();
+    const realm = new Realm(program, realmKP.publicKey);
     const instructions = await createRealmInstruction(program, {
-      realmKP: params.realmKP,
+      realmKP,
       authority: params.authorityKP?.publicKey || wallet.address,
       delegator: params.delegator,
       approver: params.approver,
@@ -63,7 +64,7 @@ export class Realm {
     });
     const tx = await wallet.createLegacyTransaction(instructions);
     if (params.authorityKP) tx.sign([params.authorityKP]);
-    tx.sign([params.realmKP]);
+    tx.sign([realmKP]);
     return { tx, realm };
   }
 }

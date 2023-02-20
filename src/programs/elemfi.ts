@@ -2,7 +2,8 @@ import { Program, Provider } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 import type { Elemfi } from "../../generated/types/elemfi";
 import { IDL } from "../../generated/types/elemfi";
-import { Realm, RealmData } from "../accounts/elemfi/Realm";
+import { Realm, Vault } from "../accounts";
+import type { RealmData, VaultData } from "../accounts";
 
 export const DEFAULT_ELEMFI_PROGRAM_ID = new PublicKey("E1eMFiZrCBjA2KqpTSbysK56aShTgU9TLmh4wXLmv8hS");
 export type ElemFiProgram = Program<Elemfi>;
@@ -34,5 +35,22 @@ export class ElemFiSDK {
       },
     ]);
     return accounts.map((account) => new Realm(this.program, account.publicKey, account.account as RealmData));
+  }
+
+  async loadVault(realm: Realm, address: PublicKey): Promise<Vault> {
+    const data = await this.program.account.vault.fetch(address);
+    return new Vault(realm, address, data);
+  }
+
+  async loadVaultsByRealm(realm: Realm): Promise<Vault[]> {
+    const accounts = await this.program.account.vault.all([
+      {
+        memcmp: {
+          offset: 8,
+          bytes: realm.address.toBase58(),
+        },
+      },
+    ]);
+    return accounts.map((account) => new Vault(realm, account.publicKey, account.account as VaultData));
   }
 }
