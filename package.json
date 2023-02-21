@@ -1,6 +1,6 @@
 {
   "name": "@elemfi/sdk",
-  "version": "0.1.9",
+  "version": "0.1.12",
   "main": "lib/src/index.js",
   "license": "MIT",
   "dependencies": {

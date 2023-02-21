@@ -8,12 +8,12 @@ export type CreateStrategyInstructionParams = {
   vault: PublicKey;
   strategy: PublicKey;
   strategyAuthority: PublicKey;
-  payer?: PublicKey;
+  payer: PublicKey;
   utilizedAmount: BN;
   utilizationMaxAmount: BN;
 };
 
-export async function createStrategyInstruction(
+export function createStrategyInstruction(
   program: ElemFiProgram,
   params: CreateStrategyInstructionParams
 ): Promise<TransactionInstruction> {
@@ -24,7 +24,7 @@ export async function createStrategyInstruction(
       approver: params.approver,
       vault: params.vault,
       strategy: params.strategy,
-      payer: params.payer || program.provider.publicKey,
+      payer: params.payer,
       systemProgram: SystemProgram.programId,
     })
     .instruction();
