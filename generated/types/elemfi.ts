@@ -1,5 +1,5 @@
 export type Elemfi = {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "elemfi",
   "instructions": [
     {
@@ -308,11 +308,6 @@ export type Elemfi = {
           "isSigner": false
         },
         {
-          "name": "collateralOwner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
           "name": "collateralToken",
           "isMut": true,
           "isSigner": false
@@ -321,6 +316,11 @@ export type Elemfi = {
           "name": "collateralTokenAccount",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "collateralTokenOwner",
+          "isMut": false,
+          "isSigner": true
         },
         {
           "name": "tokenProgram",
@@ -373,14 +373,14 @@ export type Elemfi = {
           "isSigner": false
         },
         {
-          "name": "underlyingOwner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
           "name": "collateralTokenAccount",
           "isMut": true,
           "isSigner": false
+        },
+        {
+          "name": "underlyingTokenOwner",
+          "isMut": false,
+          "isSigner": true
         },
         {
           "name": "tokenProgram",
@@ -458,11 +458,6 @@ export type Elemfi = {
               "isSigner": false
             },
             {
-              "name": "collateralOwner",
-              "isMut": false,
-              "isSigner": true
-            },
-            {
               "name": "collateralToken",
               "isMut": true,
               "isSigner": false
@@ -471,6 +466,11 @@ export type Elemfi = {
               "name": "collateralTokenAccount",
               "isMut": false,
               "isSigner": false
+            },
+            {
+              "name": "collateralTokenOwner",
+              "isMut": false,
+              "isSigner": true
             },
             {
               "name": "tokenProgram",
@@ -500,7 +500,7 @@ export type Elemfi = {
           "isSigner": true
         },
         {
-          "name": "nftTokenAccount",
+          "name": "nftAccount",
           "isMut": false,
           "isSigner": false
         },
@@ -548,14 +548,14 @@ export type Elemfi = {
               "isSigner": false
             },
             {
-              "name": "underlyingOwner",
-              "isMut": false,
-              "isSigner": true
-            },
-            {
               "name": "collateralTokenAccount",
               "isMut": true,
               "isSigner": false
+            },
+            {
+              "name": "underlyingTokenOwner",
+              "isMut": false,
+              "isSigner": true
             },
             {
               "name": "tokenProgram",
@@ -575,7 +575,7 @@ export type Elemfi = {
           "isSigner": true
         },
         {
-          "name": "nftTokenAccount",
+          "name": "nftAccount",
           "isMut": false,
           "isSigner": false
         },
@@ -972,7 +972,7 @@ export type Elemfi = {
 };
 
 export const IDL: Elemfi = {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "elemfi",
   "instructions": [
     {
@@ -1281,11 +1281,6 @@ export const IDL: Elemfi = {
           "isSigner": false
         },
         {
-          "name": "collateralOwner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
           "name": "collateralToken",
           "isMut": true,
           "isSigner": false
@@ -1294,6 +1289,11 @@ export const IDL: Elemfi = {
           "name": "collateralTokenAccount",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "collateralTokenOwner",
+          "isMut": false,
+          "isSigner": true
         },
         {
           "name": "tokenProgram",
@@ -1346,14 +1346,14 @@ export const IDL: Elemfi = {
           "isSigner": false
         },
         {
-          "name": "underlyingOwner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
           "name": "collateralTokenAccount",
           "isMut": true,
           "isSigner": false
+        },
+        {
+          "name": "underlyingTokenOwner",
+          "isMut": false,
+          "isSigner": true
         },
         {
           "name": "tokenProgram",
@@ -1431,11 +1431,6 @@ export const IDL: Elemfi = {
               "isSigner": false
             },
             {
-              "name": "collateralOwner",
-              "isMut": false,
-              "isSigner": true
-            },
-            {
               "name": "collateralToken",
               "isMut": true,
               "isSigner": false
@@ -1444,6 +1439,11 @@ export const IDL: Elemfi = {
               "name": "collateralTokenAccount",
               "isMut": false,
               "isSigner": false
+            },
+            {
+              "name": "collateralTokenOwner",
+              "isMut": false,
+              "isSigner": true
             },
             {
               "name": "tokenProgram",
@@ -1473,7 +1473,7 @@ export const IDL: Elemfi = {
           "isSigner": true
         },
         {
-          "name": "nftTokenAccount",
+          "name": "nftAccount",
           "isMut": false,
           "isSigner": false
         },
@@ -1521,14 +1521,14 @@ export const IDL: Elemfi = {
               "isSigner": false
             },
             {
-              "name": "underlyingOwner",
-              "isMut": false,
-              "isSigner": true
-            },
-            {
               "name": "collateralTokenAccount",
               "isMut": true,
               "isSigner": false
+            },
+            {
+              "name": "underlyingTokenOwner",
+              "isMut": false,
+              "isSigner": true
             },
             {
               "name": "tokenProgram",
@@ -1548,7 +1548,7 @@ export const IDL: Elemfi = {
           "isSigner": true
         },
         {
-          "name": "nftTokenAccount",
+          "name": "nftAccount",
           "isMut": false,
           "isSigner": false
         },
