@@ -6,7 +6,6 @@ export type CreateRealmInstructionParams = {
   authority: PublicKey;
   delegator: PublicKey;
   approver: PublicKey;
-  escrowCollection: PublicKey | null;
 };
 
 export async function createRealmInstruction(
@@ -16,7 +15,7 @@ export async function createRealmInstruction(
   return [
     await program.account.realm.createInstruction(params.realmKP),
     await program.methods
-      .createRealm(params.delegator, params.approver, params.escrowCollection)
+      .createRealm(params.delegator, params.approver)
       .accounts({
         realm: params.realmKP.publicKey,
         authority: params.authority,

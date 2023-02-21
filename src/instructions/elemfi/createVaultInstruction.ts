@@ -8,9 +8,12 @@ export type CreateVaultInstructionParams = {
   vaultKP: Keypair;
   vaultAuthority: PublicKey;
   collateralToken: PublicKey;
-  underlyingToken: PublicKey;
   collateralMaxSupply: BN;
+  collateralMinAmount: BN;
+  collateralMaxAmount: BN;
+  underlyingToken: PublicKey;
   underlyingLiquidity: BN;
+  escrowCollection: PublicKey | null;
 };
 
 export async function createVaultInstruction(
@@ -20,7 +23,13 @@ export async function createVaultInstruction(
   return [
     await program.account.vault.createInstruction(params.vaultKP),
     await program.methods
-      .createVault(params.collateralMaxSupply, params.underlyingLiquidity)
+      .createVault(
+        params.collateralMaxSupply,
+        params.collateralMinAmount,
+        params.collateralMaxAmount,
+        params.underlyingLiquidity,
+        params.escrowCollection
+      )
       .accounts({
         realm: params.realm,
         authority: params.authority,

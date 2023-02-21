@@ -21,12 +21,15 @@ export interface VaultData {
   authorityBump: number;
   tokenDecimals: number;
   collateralToken: PublicKey;
-  underlyingToken: PublicKey;
   collateralSupply: BN;
   collateralMaxSupply: BN;
+  collateralMinAmount: BN;
+  collateralMaxAmount: BN;
+  underlyingToken: PublicKey;
   underlyingLiquidity: BN;
   pendingObligationAmount: BN;
   pendingObligations: number;
+  escrowCollection: PublicKey | null;
 }
 
 export class Vault {
@@ -54,16 +57,24 @@ export class Vault {
     return this.data.collateralToken;
   }
 
-  get underlyingToken(): PublicKey {
-    return this.data.underlyingToken;
-  }
-
   get collateralSupply(): string {
     return TokenAmountUtil.toUiAmount(this.data.collateralSupply, this.data.tokenDecimals);
   }
 
   get collateralMaxSupply(): string {
     return TokenAmountUtil.toUiAmount(this.data.collateralMaxSupply, this.data.tokenDecimals);
+  }
+
+  get collateralMinAmount(): string {
+    return TokenAmountUtil.toUiAmount(this.data.collateralMinAmount, this.data.tokenDecimals);
+  }
+
+  get collateralMaxAmount(): string {
+    return TokenAmountUtil.toUiAmount(this.data.collateralMaxAmount, this.data.tokenDecimals);
+  }
+
+  get underlyingToken(): PublicKey {
+    return this.data.underlyingToken;
   }
 
   get underlyingLiquidity(): string {
@@ -76,6 +87,10 @@ export class Vault {
 
   get pendingObligations(): number {
     return this.data.pendingObligations;
+  }
+
+  get escrowCollection(): PublicKey | null {
+    return this.data.escrowCollection;
   }
 
   get authority(): PublicKey {
@@ -96,10 +111,13 @@ export class Vault {
       vaultKP?: Keypair;
       authorityKP?: Keypair;
       collateralTokenKP?: Keypair;
-      underlyingToken: PublicKey;
       collateralSupply?: string;
       collateralMaxSupply: string;
+      collateralMinAmount: string;
+      collateralMaxAmount: string;
+      underlyingToken: PublicKey;
       underlyingLiquidity: string;
+      escrowCollection: PublicKey | null;
     }
   ): Promise<{ tx: VersionedTransaction; vault: Vault }> {
     const vaultKP = params.vaultKP || Keypair.generate();
@@ -144,9 +162,12 @@ export class Vault {
         vaultKP,
         vaultAuthority: vault.authority,
         collateralToken,
-        underlyingToken: params.underlyingToken,
         collateralMaxSupply: TokenAmountUtil.toAmount(params.collateralMaxSupply, underlyingSupply.decimals),
+        collateralMinAmount: TokenAmountUtil.toAmount(params.collateralMinAmount, underlyingSupply.decimals),
+        collateralMaxAmount: TokenAmountUtil.toAmount(params.collateralMaxAmount, underlyingSupply.decimals),
+        underlyingToken: params.underlyingToken,
         underlyingLiquidity: TokenAmountUtil.toAmount(params.underlyingLiquidity, underlyingSupply.decimals),
+        escrowCollection: params.escrowCollection,
       }))
     );
     const tx = await wallet.createLegacyTransaction(instructions);

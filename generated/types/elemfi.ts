@@ -1,5 +1,5 @@
 export type Elemfi = {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "elemfi",
   "instructions": [
     {
@@ -24,12 +24,6 @@ export type Elemfi = {
         {
           "name": "approver",
           "type": "publicKey"
-        },
-        {
-          "name": "escrowCollection",
-          "type": {
-            "option": "publicKey"
-          }
         }
       ]
     },
@@ -68,8 +62,22 @@ export type Elemfi = {
           "type": "u64"
         },
         {
+          "name": "collateralMinAmount",
+          "type": "u64"
+        },
+        {
+          "name": "collateralMaxAmount",
+          "type": "u64"
+        },
+        {
           "name": "underlyingLiquidity",
           "type": "u64"
+        },
+        {
+          "name": "escrowCollection",
+          "type": {
+            "option": "publicKey"
+          }
         }
       ]
     },
@@ -663,15 +671,6 @@ export type Elemfi = {
               "approver has power to add new router"
             ],
             "type": "publicKey"
-          },
-          {
-            "name": "escrowCollection",
-            "docs": [
-              "escrow NFT collection"
-            ],
-            "type": {
-              "option": "publicKey"
-            }
           }
         ]
       }
@@ -726,16 +725,24 @@ export type Elemfi = {
             "type": "publicKey"
           },
           {
-            "name": "underlyingToken",
-            "type": "publicKey"
-          },
-          {
             "name": "collateralSupply",
             "type": "u64"
           },
           {
             "name": "collateralMaxSupply",
             "type": "u64"
+          },
+          {
+            "name": "collateralMinAmount",
+            "type": "u64"
+          },
+          {
+            "name": "collateralMaxAmount",
+            "type": "u64"
+          },
+          {
+            "name": "underlyingToken",
+            "type": "publicKey"
           },
           {
             "name": "underlyingLiquidity",
@@ -748,6 +755,15 @@ export type Elemfi = {
           {
             "name": "pendingObligations",
             "type": "u32"
+          },
+          {
+            "name": "escrowCollection",
+            "docs": [
+              "escrow NFT collection"
+            ],
+            "type": {
+              "option": "publicKey"
+            }
           }
         ]
       }
@@ -956,7 +972,7 @@ export type Elemfi = {
 };
 
 export const IDL: Elemfi = {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "elemfi",
   "instructions": [
     {
@@ -981,12 +997,6 @@ export const IDL: Elemfi = {
         {
           "name": "approver",
           "type": "publicKey"
-        },
-        {
-          "name": "escrowCollection",
-          "type": {
-            "option": "publicKey"
-          }
         }
       ]
     },
@@ -1025,8 +1035,22 @@ export const IDL: Elemfi = {
           "type": "u64"
         },
         {
+          "name": "collateralMinAmount",
+          "type": "u64"
+        },
+        {
+          "name": "collateralMaxAmount",
+          "type": "u64"
+        },
+        {
           "name": "underlyingLiquidity",
           "type": "u64"
+        },
+        {
+          "name": "escrowCollection",
+          "type": {
+            "option": "publicKey"
+          }
         }
       ]
     },
@@ -1620,15 +1644,6 @@ export const IDL: Elemfi = {
               "approver has power to add new router"
             ],
             "type": "publicKey"
-          },
-          {
-            "name": "escrowCollection",
-            "docs": [
-              "escrow NFT collection"
-            ],
-            "type": {
-              "option": "publicKey"
-            }
           }
         ]
       }
@@ -1683,16 +1698,24 @@ export const IDL: Elemfi = {
             "type": "publicKey"
           },
           {
-            "name": "underlyingToken",
-            "type": "publicKey"
-          },
-          {
             "name": "collateralSupply",
             "type": "u64"
           },
           {
             "name": "collateralMaxSupply",
             "type": "u64"
+          },
+          {
+            "name": "collateralMinAmount",
+            "type": "u64"
+          },
+          {
+            "name": "collateralMaxAmount",
+            "type": "u64"
+          },
+          {
+            "name": "underlyingToken",
+            "type": "publicKey"
           },
           {
             "name": "underlyingLiquidity",
@@ -1705,6 +1728,15 @@ export const IDL: Elemfi = {
           {
             "name": "pendingObligations",
             "type": "u32"
+          },
+          {
+            "name": "escrowCollection",
+            "docs": [
+              "escrow NFT collection"
+            ],
+            "type": {
+              "option": "publicKey"
+            }
           }
         ]
       }
