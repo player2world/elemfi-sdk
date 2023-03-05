@@ -1,5 +1,5 @@
-import { PublicKey, SystemProgram, TransactionInstruction } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
+import { PublicKey, SystemProgram, TransactionInstruction } from "@solana/web3.js";
 import { ElemFiProgram } from "../../programs";
 
 export type CreateStrategyInstructionParams = {

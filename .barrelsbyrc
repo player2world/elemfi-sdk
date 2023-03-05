@@ -1,0 +1,12 @@
+{
+  "directory": [
+    "./src/accounts",
+    "./src/instructions",
+    "./src/programs",
+    "./src/utils"
+  ],
+  "exclude": [
+    ".spec.ts"
+  ],
+  "delete": true
+}

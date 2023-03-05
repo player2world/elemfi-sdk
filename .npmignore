@@ -1,4 +1,5 @@
 
 src
+.barrelsbyrc
 .prettier*
 tsconfig.json

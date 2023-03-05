@@ -1,5 +1,6 @@
-import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
+import { Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { createAssociatedTokenAccountInstruction, getAssociatedTokenAddressSync, NATIVE_MINT } from "@solana/spl-token";
 import { ElemFiProgram } from "../../programs";
 
 export type CreateVaultInstructionParams = {
@@ -20,7 +21,7 @@ export async function createVaultInstruction(
   program: ElemFiProgram,
   params: CreateVaultInstructionParams
 ): Promise<TransactionInstruction[]> {
-  return [
+  const instructions = [
     await program.account.vault.createInstruction(params.vaultKP),
     await program.methods
       .createVault(
@@ -46,4 +47,22 @@ export async function createVaultInstruction(
       ])
       .instruction(),
   ];
+
+  if (!params.underlyingToken.equals(NATIVE_MINT)) {
+    const vaultTokenAddress = getAssociatedTokenAddressSync(params.underlyingToken, params.vaultAuthority, true);
+    try {
+      await program.provider.connection.getTokenAccountBalance(vaultTokenAddress);
+    } catch {
+      instructions.push(
+        createAssociatedTokenAccountInstruction(
+          program.provider.publicKey!,
+          vaultTokenAddress,
+          params.vaultAuthority,
+          params.underlyingToken
+        )
+      );
+    }
+  }
+
+  return instructions;
 }

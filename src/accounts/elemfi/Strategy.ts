@@ -75,7 +75,7 @@ export class Strategy {
         vault: vault.address,
         strategy: strategy.address,
         strategyAuthority: strategy.authority,
-        payer: wallet.address,
+        payer: vault.program.provider.publicKey || wallet.address,
         utilizedAmount: TokenAmountUtil.toAmount(params.utilizedAmount, vault.tokenDecimals),
         utilizationMaxAmount: TokenAmountUtil.toAmount(params.utilizationMaxAmount, vault.tokenDecimals),
       }),

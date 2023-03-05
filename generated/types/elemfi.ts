@@ -345,7 +345,7 @@ export type Elemfi = {
         },
         {
           "name": "createdTs",
-          "type": "i64"
+          "type": "u32"
         }
       ]
     },
@@ -517,7 +517,7 @@ export type Elemfi = {
         },
         {
           "name": "createdTs",
-          "type": "i64"
+          "type": "u32"
         }
       ]
     },
@@ -641,7 +641,7 @@ export type Elemfi = {
           },
           {
             "name": "createdTs",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }
@@ -801,7 +801,7 @@ export type Elemfi = {
           },
           {
             "name": "createdTs",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }
@@ -1318,7 +1318,7 @@ export const IDL: Elemfi = {
         },
         {
           "name": "createdTs",
-          "type": "i64"
+          "type": "u32"
         }
       ]
     },
@@ -1490,7 +1490,7 @@ export const IDL: Elemfi = {
         },
         {
           "name": "createdTs",
-          "type": "i64"
+          "type": "u32"
         }
       ]
     },
@@ -1614,7 +1614,7 @@ export const IDL: Elemfi = {
           },
           {
             "name": "createdTs",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }
@@ -1774,7 +1774,7 @@ export const IDL: Elemfi = {
           },
           {
             "name": "createdTs",
-            "type": "i64"
+            "type": "u32"
           }
         ]
       }

@@ -2,7 +2,7 @@ import { Program, Provider } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 import type { Elemfi } from "../../generated/types/elemfi";
 import { IDL } from "../../generated/types/elemfi";
-import { Realm, Strategy, Vault } from "../accounts";
+import { Realm, Vault } from "../accounts";
 import type { RealmData, VaultData } from "../accounts";
 
 export const DEFAULT_ELEMFI_PROGRAM_ID = new PublicKey("E1eMFiZrCBjA2KqpTSbysK56aShTgU9TLmh4wXLmv8hS");

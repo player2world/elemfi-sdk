@@ -3,3 +3,4 @@
 .npmrc
 lib
 node_modules
+src/**/index.ts

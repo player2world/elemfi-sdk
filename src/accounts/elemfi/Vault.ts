@@ -12,7 +12,7 @@ import {
   createSetAuthorityInstruction,
 } from "@solana/spl-token";
 import { ElemFiProgram } from "../../programs";
-import { createVaultInstruction } from "../../instructions";
+import { createVaultInstruction, depositInstruction } from "../../instructions";
 import { ConnectedWallet, TokenAmountUtil } from "../../utils";
 import { Realm } from "./Realm";
 
@@ -124,13 +124,14 @@ export class Vault {
     const collateralTokenKP = params.collateralTokenKP || Keypair.generate();
     const collateralToken = collateralTokenKP.publicKey;
     const authority = params.authorityKP?.publicKey || wallet.address;
+    const payer = realm.program.provider.publicKey || wallet.address;
 
     const vault = new Vault(realm, vaultKP.publicKey);
     const { value: underlyingSupply } = await vault.program.provider.connection.getTokenSupply(params.underlyingToken);
 
     const instructions = [
       SystemProgram.createAccount({
-        fromPubkey: wallet.address,
+        fromPubkey: payer,
         newAccountPubkey: collateralToken,
         space: MintLayout.span,
         lamports: await getMinimumBalanceForRentExemptMint(vault.program.provider.connection),
@@ -143,7 +144,7 @@ export class Vault {
       const destination = getAssociatedTokenAddressSync(collateralToken, authority, true);
       const collateralSupply = TokenAmountUtil.toAmount(params.collateralSupply, underlyingSupply.decimals);
       instructions.push(
-        createAssociatedTokenAccountInstruction(wallet.address, destination, authority, collateralToken),
+        createAssociatedTokenAccountInstruction(payer, destination, authority, collateralToken),
         createMintToCheckedInstruction(
           collateralToken,
           destination,
@@ -174,5 +175,24 @@ export class Vault {
     if (params.authorityKP) tx.sign([params.authorityKP]);
     tx.sign([vaultKP, collateralTokenKP]);
     return { tx, vault };
+  }
+
+  async deposit(
+    wallet: ConnectedWallet,
+    params: {
+      amount: string;
+    }
+  ): Promise<VersionedTransaction> {
+    return wallet.createLegacyTransaction(
+      await depositInstruction(this.program, {
+        realm: this.realm.address,
+        vault: this.address,
+        vaultAuthority: this.authority,
+        underlyingToken: this.underlyingToken,
+        collateralToken: this.collateralToken,
+        underlyingTokenOwner: wallet.address,
+        amount: TokenAmountUtil.toAmount(params.amount, this.tokenDecimals),
+      })
+    );
   }
 }
