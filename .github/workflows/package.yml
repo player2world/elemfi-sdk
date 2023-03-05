@@ -1,0 +1,43 @@
+name: Publish NPM Package
+
+on:
+  push:
+    paths:
+      - "src/**"
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  SOLANA_VERSION: stable
+  ANCHOR_VERSION: 0.26.0
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Install NPM Packages
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install
+        env:
+          HUSKY: 0
+
+      - name: Build SDK
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: build
+
+      - name: Publish SDK
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}' > .npmrc
+          npm publish --access public
