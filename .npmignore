@@ -1,8 +1,8 @@
 
-.husky
-.vscode
-generated
-src
+.husky/
+.vscode/
+generated/
+src/
 .barrelsbyrc
 .prettier*
 tsconfig.json
