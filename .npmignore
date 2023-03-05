@@ -1,4 +1,7 @@
 
+.husky
+.vscode
+generated
 src
 .barrelsbyrc
 .prettier*
