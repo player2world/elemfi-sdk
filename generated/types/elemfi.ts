@@ -1,5 +1,5 @@
 export type Elemfi = {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "name": "elemfi",
   "instructions": [
     {
@@ -972,7 +972,7 @@ export type Elemfi = {
 };
 
 export const IDL: Elemfi = {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "name": "elemfi",
   "instructions": [
     {

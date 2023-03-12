@@ -24,7 +24,7 @@ jobs:
       - name: Install NPM Packages
         uses: borales/actions-yarn@v4
         with:
-          cmd: install
+          cmd: install --frozen-lockfile
         env:
           HUSKY: 0
 
