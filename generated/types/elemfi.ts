@@ -314,7 +314,7 @@ export type Elemfi = {
         },
         {
           "name": "collateralTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -464,7 +464,7 @@ export type Elemfi = {
             },
             {
               "name": "collateralTokenAccount",
-              "isMut": false,
+              "isMut": true,
               "isSigner": false
             },
             {
@@ -1287,7 +1287,7 @@ export const IDL: Elemfi = {
         },
         {
           "name": "collateralTokenAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -1437,7 +1437,7 @@ export const IDL: Elemfi = {
             },
             {
               "name": "collateralTokenAccount",
-              "isMut": false,
+              "isMut": true,
               "isSigner": false
             },
             {
