@@ -42,7 +42,7 @@ function createObligationInstructionAccounts(params: CreateObligationInstruction
     realm: params.realm,
     vault: params.vault,
     vaultAuthority: params.vaultAuthority,
-    obligation: params.vaultAuthority,
+    obligation: params.obligation,
     collateralToken: params.collateralToken,
     collateralTokenAccount: params.collateralTokenAccount,
     collateralTokenOwner: params.collateralTokenOwner,
