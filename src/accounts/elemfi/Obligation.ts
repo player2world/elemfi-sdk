@@ -74,7 +74,6 @@ export class Obligation {
     vault: Vault,
     wallet: ConnectedWallet,
     params: {
-      strategyAuthority: PublicKey;
       amount: string;
     }
   ): Promise<{ tx: VersionedTransaction; obligation: Obligation }> {
