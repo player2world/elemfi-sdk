@@ -87,19 +87,17 @@ export async function depositInstruction(
   const instructions: TransactionInstruction[] = [];
   const remainingAccounts = depositRemainingAccounts(params);
 
-  if (!params.underlyingToken.equals(NATIVE_MINT)) {
-    try {
-      await program.provider.connection.getTokenAccountBalance(remainingAccounts[0].pubkey);
-    } catch {
-      instructions.push(
-        createAssociatedTokenAccountInstruction(
-          params.underlyingTokenOwner,
-          accounts.collateralTokenAccount,
-          params.underlyingTokenOwner,
-          params.collateralToken
-        )
-      );
-    }
+  try {
+    await program.provider.connection.getTokenAccountBalance(accounts.collateralTokenAccount);
+  } catch {
+    instructions.push(
+      createAssociatedTokenAccountInstruction(
+        params.underlyingTokenOwner,
+        accounts.collateralTokenAccount,
+        params.underlyingTokenOwner,
+        params.collateralToken
+      )
+    );
   }
 
   instructions.push(
