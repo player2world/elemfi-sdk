@@ -75,7 +75,7 @@ export class Book {
   async claim(
     wallet: ConnectedWallet,
     params: {
-      totalAmount: string | BN;
+      totalAmount: number;
       merkleIndex: number;
       merkleProof: string[];
     }
@@ -86,7 +86,7 @@ export class Book {
       instructions.push(
         await this.program.methods
           .createBook(
-            new BN(params.totalAmount),
+            TokenAmountUtil.toAmount(params.totalAmount.toString(), this.pool.data.decimals),
             params.merkleIndex,
             params.merkleProof.map((hexStr) => Buffer.from(hexStr, "hex"))
           )
