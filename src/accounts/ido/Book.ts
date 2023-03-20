@@ -77,7 +77,7 @@ export class Book {
     params: {
       totalAmount: string | BN;
       merkleIndex: number;
-      merkleProof: number[][];
+      merkleProof: string[];
     }
   ): Promise<VersionedTransaction> {
     const instructions: TransactionInstruction[] = [];
@@ -85,7 +85,11 @@ export class Book {
     if (!this.data) {
       instructions.push(
         await this.program.methods
-          .createBook(new BN(params.totalAmount), params.merkleIndex, params.merkleProof)
+          .createBook(
+            new BN(params.totalAmount),
+            params.merkleIndex,
+            params.merkleProof.map((hexStr) => Buffer.from(hexStr, "hex"))
+          )
           .accounts({
             user: wallet.address,
             pool: this.pool.address,
