@@ -88,7 +88,7 @@ export class Book {
           .createBook(
             TokenAmountUtil.toAmount(params.totalAmount.toString(), this.pool.data.decimals),
             params.merkleIndex,
-            params.merkleProof.map((hexStr) => Buffer.from(hexStr, "hex"))
+            params.merkleProof.map((hexStr) => [...Buffer.from(hexStr, "hex")])
           )
           .accounts({
             user: wallet.address,
