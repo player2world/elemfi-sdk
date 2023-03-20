@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "src/**"
+      - "generated/**/**"
     branches:
       - main
   workflow_dispatch:
