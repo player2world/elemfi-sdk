@@ -35,7 +35,7 @@ export class Book {
 
   get address(): PublicKey {
     return PublicKey.findProgramAddressSync(
-      [Buffer.from(Pool.PREFIX), this.pool.address.toBuffer(), this.user.toBuffer()],
+      [Buffer.from(Book.PREFIX), this.pool.address.toBuffer(), this.user.toBuffer()],
       this.program.programId
     )[0];
   }
