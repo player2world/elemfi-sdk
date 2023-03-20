@@ -102,6 +102,19 @@ export class Book {
     }
 
     const userTokenAccount = getAssociatedTokenAddressSync(this.pool.treasuryMint, this.user, true);
+    try {
+      await this.program.provider.connection.getTokenAccountBalance(userTokenAccount);
+    } catch {
+      instructions.push(
+        createAssociatedTokenAccountInstruction(
+          wallet.address, // blindly set
+          userTokenAccount,
+          wallet.address,
+          this.pool.treasuryMint
+        )
+      );
+    }
+
     instructions.push(
       await this.program.methods
         .claim()
@@ -115,19 +128,6 @@ export class Book {
         })
         .instruction()
     );
-
-    try {
-      await this.program.provider.connection.getTokenAccountBalance(userTokenAccount);
-    } catch {
-      instructions.push(
-        createAssociatedTokenAccountInstruction(
-          wallet.address, // blindly set
-          userTokenAccount,
-          wallet.address,
-          this.pool.treasuryMint
-        )
-      );
-    }
 
     return wallet.createLegacyTransaction(instructions);
   }
