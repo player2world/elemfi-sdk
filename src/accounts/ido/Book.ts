@@ -74,7 +74,7 @@ export class Book {
       if (currentTs < this.pool.data.endTs) {
         const vestingN = Math.floor((this.pool.data.endTs - this.pool.data.startTs) / this.pool.data.duration);
         const vestedN = Math.floor((currentTs - this.pool.data.startTs) / this.pool.data.duration);
-        return Math.floor((totalAmount * vestedN) / vestingN).toString();
+        return ((totalAmount * vestedN) / vestingN).toString();
       } else {
         return totalAmount.toString();
       }
