@@ -10,10 +10,11 @@ export class TokenAmountUtil {
   }
 
   static toUiAmount(amount: BN | string, decimals: number = 0): string {
-    const amountString = amount.toString();
+    let amountString = amount.toString();
     if (!decimals) return amountString;
+    if (amountString.length < decimals) amountString = amountString.padStart(decimals, "0");
     return (
-      amountString.substring(0, amountString.length - decimals) +
+      (amountString.substring(0, amountString.length - decimals) || "0") +
       "." +
       amountString.substring(amountString.length - decimals, amountString.length)
     );
