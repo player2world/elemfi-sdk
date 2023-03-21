@@ -50,8 +50,8 @@ export class Book {
     return TokenAmountUtil.toUiAmount(this.data.claimedAmount, this.pool.data.decimals);
   }
 
-  get claimableAmount(): string {
-    if (!this.data) return "0";
+  get claimableAmount(): string | null {
+    if (!this.data) return null;
 
     const currentTs = Math.trunc(new Date().getTime() / 1000);
     if (currentTs < this.pool.data.startTs) return "0";
@@ -66,6 +66,21 @@ export class Book {
     } else {
       return TokenAmountUtil.toUiAmount(this.data.totalAmount.sub(this.data.claimedAmount), this.pool.data.decimals);
     }
+  }
+
+  getClaimableAmount(totalAmount: number): string {
+    if (this.claimableAmount === null) {
+      const currentTs = Math.trunc(new Date().getTime() / 1000);
+      if (currentTs < this.pool.data.endTs) {
+        const vestingN = Math.floor((this.pool.data.endTs - this.pool.data.startTs) / this.pool.data.duration);
+        const vestedN = Math.floor((currentTs - this.pool.data.startTs) / this.pool.data.duration);
+        return Math.floor((totalAmount * vestedN) / vestingN).toString();
+      } else {
+        return totalAmount.toString();
+      }
+    }
+
+    return this.claimableAmount;
   }
 
   constructor(readonly pool: Pool, readonly user: PublicKey, data?: BookData) {
